@@ -3,41 +3,41 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 )
 
 func main() {
-	// Config file
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
+	host := os.Getenv("DATABASE_HOST")
+	port := os.Getenv("DATABASE_PORT")
+	username := os.Getenv("DATABASE_USERNAME")
+	password := os.Getenv("DATABASE_PASSWORD")
+	name := os.Getenv("DATABASE_NAME")
 
-	// Defaults
-	viper.SetDefault("db.host", "localhost")
-	viper.SetDefault("db.port", 5432)
-	viper.SetDefault("db.username", "trackmyfish")
-	viper.SetDefault("db.password", "")
-	viper.SetDefault("db.name", "trackmyfish")
-
-	err := viper.ReadInConfig()
-	if err != nil {
-		logrus.Fatal("unable to read config")
+	if host == "" {
+		log.Fatal("DATABASE_HOST not specified")
 	}
 
-	var (
-		dbHost     = viper.GetString("db.host")
-		dbPort     = viper.GetInt("db.port")
-		dbUsername = viper.GetString("db.username")
-		dbPassword = viper.GetString("db.password")
-		dbName     = viper.GetString("db.name")
-	)
+	if port == "" {
+		log.Fatal("DATABASE_PORT not specified")
+	}
 
-	uri := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", dbUsername, dbPassword, dbHost, dbPort, dbName)
+	if username == "" {
+		log.Fatal("DATABASE_USERNAME not specified")
+	}
+
+	if password == "" {
+		log.Fatal("DATABASE_PASSWORD not specified")
+	}
+
+	if name == "" {
+		log.Fatal("DATABASE_NAME not specified")
+	}
+
+	uri := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", username, password, host, port, name)
 
 	m, err := migrate.New("file://migrations", uri)
 	if err != nil {
