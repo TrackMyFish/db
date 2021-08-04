@@ -33,9 +33,9 @@ docker run -e DATABASE_HOST=localhost -e DATABASE_PORT=5432 -e DATABASE_USERNAME
 ```
 docker login
 
-docker tag trackmyfish simondrake/trackmyfish:v1alpha1
+docker tag trackmyfish_migrations simondrake/trackmyfish_migrations:v1alpha1
 
-docker push simondrake/trackmyfish:v1alpha1
+docker push simondrake/trackmyfish_migrations:v1alpha1
 ```
 
 
