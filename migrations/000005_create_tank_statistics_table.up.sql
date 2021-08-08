@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS "tank_statistics" (
   "id" SERIAL PRIMARY KEY NOT NULL,
-  "test_date" VARCHAR(255) DEFAULT '',
-  "ph" FLOAT DEFAULT 0.0,
-  "gh" FLOAT DEFAULT 0.0,
-  "kH" FLOAT DEFAULT 0.0,
-  "ammonia" FLOAT DEFAULT 0.0,
-  "nitrite" FLOAT DEFAULT 0.0,
-  "nitrate" FLOAT DEFAULT 0.0,
-  "phosphate" FLOAT DEFAULT 0.0,
+  "test_date" VARCHAR(255) DEFAULT NULL,
+  "ph" FLOAT DEFAULT NULL,
+  "gh" FLOAT DEFAULT NULL,
+  "kh" FLOAT DEFAULT NULL,
+  "ammonia" FLOAT DEFAULT NULL,
+  "nitrite" FLOAT DEFAULT NULL,
+  "nitrate" FLOAT DEFAULT NULL,
+  "phosphate" FLOAT DEFAULT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
