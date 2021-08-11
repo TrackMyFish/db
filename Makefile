@@ -17,6 +17,6 @@ docker-push:
 
 .PHONY: docker-all
 docker-all: docker-build docker-tag docker-push
-	echo "=================================="
-	echo "Docker tagged, built and pushed"
-	echo "=================================="
+	@echo "=================================="
+	@echo "Docker tagged, built and pushed"
+	@echo "=================================="
