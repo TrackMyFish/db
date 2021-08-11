@@ -9,10 +9,20 @@ This repository hold the database design and migration scripts of TrackMyFish
 * Run postgres using `docker compose` - `docker-compose up -d` (**Note**: unless you're just testing TrackMyFish, you should change the secrets to something much more secure)
 * Run migrations with `go run main.go`
 
+### [migrate-cli](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate)
+
+**NOTE:** This should only be used for local development purposes.
+
+* Get current version - `migrate -path migrations -database "postgres://trackmyfish:supersecretpassword@localhost:5432/trackmyfish?sslmode=disable" version`
+* Apply one down migration (e.g. from version 8 -> 7): `migrate -path migrations -database "postgres://trackmyfish:supersecretpassword@localhost:5432/trackmyfish?sslmode=disable" down 1`
+
 ## Logging into the postgres container
 
-* Sometimes it's useful to log into the Postgres container, for testing purposes. This can be done with the `docker exec -it trackmyfish_db psql -U trackmyfish -W trackmyfish` command, followed by the specified password (`supersecretpassword` by default). **NOTE:** This MUST only be done in the development/testing environment only.
+Sometimes it's useful to log into the Postgres container, for testing purposes. This can be done with the `docker exec -it trackmyfish_db psql -U trackmyfish -W trackmyfish` command, followed by the specified password (`supersecretpassword` by default).
 
+It can also be done in one command: `docker exec -it trackmyfish_db psql postgresql://trackmyfish:supersecretpassword@localhost:5432/trackmyfish`
+
+**NOTE:** This MUST only be done in the development/testing environment only.
 
 # Running the Dockerfile
 
