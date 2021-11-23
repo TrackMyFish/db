@@ -3,6 +3,7 @@ module github.com/trackmyfish/db
 go 1.16
 
 require (
+	github.com/cenkalti/backoff/v4 v4.1.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-migrate/migrate/v4 v4.14.1
 	github.com/sirupsen/logrus v1.8.1 // indirect

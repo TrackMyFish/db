@@ -4,11 +4,30 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
+	"github.com/cenkalti/backoff/v4"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
+
+// Retry is an exponential backoff retry helper. It is used to wait for postgres to boot up
+func Retry(op func() error) error {
+	bo := backoff.NewExponentialBackOff()
+	bo.MaxInterval = time.Second * 5
+	bo.MaxElapsedTime = time.Minute * 5
+
+	if err := backoff.Retry(op, bo); err != nil {
+		if bo.NextBackOff() == backoff.Stop {
+			return fmt.Errorf("reached retry deadline")
+		}
+
+		return fmt.Errorf("retry failed: %w", err)
+	}
+
+	return nil
+}
 
 func main() {
 	host := os.Getenv("DATABASE_HOST")
@@ -39,8 +58,18 @@ func main() {
 
 	uri := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", username, password, host, port, name)
 
-	m, err := migrate.New("file://migrations", uri)
-	if err != nil {
+	var m *migrate.Migrate
+
+	if err := Retry(func() error {
+		var err error
+
+		m, err = migrate.New("file://migrations", uri)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}); err != nil {
 		log.Fatal("error creating new migration: ", err)
 	}
 

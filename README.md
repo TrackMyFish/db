@@ -6,7 +6,7 @@ This repository hold the database design and migration scripts of TrackMyFish
 
 ## Running DB migrations
 
-* Run postgres using `docker compose` - `docker-compose up -d` (**Note**: unless you're just testing TrackMyFish, you should change the secrets to something much more secure)
+* Add database connection details to `local.env`
 * Run migrations with `go run main.go`
 
 ### [migrate-cli](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate)
