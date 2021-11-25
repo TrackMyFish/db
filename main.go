@@ -15,7 +15,7 @@ import (
 // Retry is an exponential backoff retry helper. It is used to wait for postgres to boot up
 func Retry(op func() error) error {
 	bo := backoff.NewExponentialBackOff()
-	bo.MaxInterval = time.Second * 5
+	bo.MaxInterval = time.Second * 10
 	bo.MaxElapsedTime = time.Minute * 5
 
 	if err := backoff.Retry(op, bo); err != nil {
@@ -63,10 +63,15 @@ func main() {
 	if err := Retry(func() error {
 		var err error
 
+		fmt.Println("trying migration...")
+
 		m, err = migrate.New("file://migrations", uri)
 		if err != nil {
+			fmt.Printf("migration failed: (%+v) \n", err)
 			return err
 		}
+
+		fmt.Println("migration completed successfully")
 
 		return nil
 	}); err != nil {

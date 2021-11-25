@@ -18,9 +18,9 @@ This repository hold the database design and migration scripts of TrackMyFish
 
 ## Logging into the postgres container
 
-Sometimes it's useful to log into the Postgres container, for testing purposes. This can be done with the `docker exec -it trackmyfish_db psql -U trackmyfish -W trackmyfish` command, followed by the specified password (`supersecretpassword` by default).
+Sometimes it's useful to log into the Postgres container, for testing purposes. This can be done with the `docker exec -it trackmyfish_db_test psql -U trackmyfish -W trackmyfish` command, followed by the specified password (`supersecretpassword` by default).
 
-It can also be done in one command: `docker exec -it trackmyfish_db psql postgresql://trackmyfish:supersecretpassword@localhost:5432/trackmyfish`
+It can also be done in one command: `docker exec -it trackmyfish_db_test psql postgresql://trackmyfish:supersecretpassword@localhost:5432/trackmyfish`
 
 **NOTE:** This MUST only be done in the development/testing environment only.
 
@@ -47,6 +47,10 @@ docker tag trackmyfish_migrations simondrake/trackmyfish_migrations:v1alpha1
 
 docker push simondrake/trackmyfish_migrations:v1alpha1
 ```
+
+## Development
+
+A `docker-compose.yaml` file has been provided as a convenience, which can be used to run migrations against.
 
 
 

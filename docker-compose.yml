@@ -1,0 +1,22 @@
+---
+version: "3"
+services:
+  # The database for TrackMyFish
+  trackmyfish_db:
+    container_name: trackmyfish_db_test
+    image: postgres
+    networks:
+      - trackmyfish_test
+    environment:
+      - POSTGRES_PASSWORD=supersecretpassword
+      - POSTGRES_USER=trackmyfish
+      - POSTGRES_DB=trackmyfish
+    volumes:
+      - ${HOME}/trackmyfish/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+
+networks:
+  trackmyfish_test:
+
