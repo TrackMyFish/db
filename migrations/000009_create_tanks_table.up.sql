@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS "tanks" (
   "model" VARCHAR(40) DEFAULT '',
   "name" VARCHAR(40) DEFAULT '',
   "location" VARCHAR(40) DEFAULT '',
-  "capacity_measurement" VARCHAR(10) DEFAULT '',
+  "capacity_measurement" VARCHAR(20) DEFAULT '',
   "capacity" FLOAT DEFAULT NULL,
   "description" VARCHAR(255) DEFAULT '',
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
